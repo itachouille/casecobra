@@ -19,7 +19,7 @@ const Page = () => {
     onClientUploadComplete: ([data]) => {
       const configId = data.serverData.configId;
       startTransition(() => {
-        router.push(`/configure/design?/id=${configId}`);
+        router.push(`/configure/design?id=${configId}`);
       });
     },
     onUploadProgress(p) {
@@ -76,7 +76,7 @@ const Page = () => {
               ) : isUploading || isPending ? (
                 <Loader2 className="animate-spin size-6 text-zinc-500 mb-2" />
               ) : (
-                <Image className="size-6 text-zinc-500 mb-2" />
+                <Image className="size-6 text-zinc-500 mb-2"/>
               )}
               <div className="flex flex-col justify-center mb-2 text-sm text-zinc-700">
                 {isUploading ? (
