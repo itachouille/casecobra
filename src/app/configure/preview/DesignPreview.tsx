@@ -25,7 +25,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
 
   const [showConfetti, setShowConfetti] = useState<boolean>(false);
-  useEffect(() => setShowConfetti(true),[]);
+  useEffect(() => setShowConfetti(true), []);
 
   const { color, model, finish, material } = configuration;
   const tw = COLORS.find(
@@ -67,7 +67,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
 
   return (
     <>
-      <div className=" pointer-events-none select-none absolute inset-0 overflow-hidden flex justify-center">
+      <div className="pointer-events-none select-none absolute inset-0 overflow-hidden flex justify-center">
         <Confetti
           active={showConfetti}
           config={{ elementCount: 200, spread: 90 }}
@@ -75,7 +75,7 @@ const DesignPreview = ({ configuration }: { configuration: Configuration }) => {
       </div>
       <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
       <div className="mt-20 grid grid-cols-1 text-sm sm:grid-cols-12 sm:grid-rows-1 sm:gap-x-6 md:gap-x-8 lg:gap-x-12">
-        <div className=" sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2">
+        <div className="sm:col-span-4 md:col-span-3 md:row-span-2 md:row-end-2">
           <Phone
             className={cn(`bg-${tw}`)}
             imgSrc={configuration.croppedImageUrl!}

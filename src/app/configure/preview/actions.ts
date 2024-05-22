@@ -14,12 +14,14 @@ export const createCheckoutSession = async ({
   const configuration = await db.configuration.findUnique({
     where: { id: configId },
   });
+
   if (!configuration) {
     throw new Error("No such configuration found");
   }
 
   const { getUser } = getKindeServerSession();
   const user = await getUser();
+
   if (!user) {
     throw new Error("You need to be logged in");
   }
@@ -40,12 +42,14 @@ export const createCheckoutSession = async ({
     },
   });
 
+  console.log(user.id, configuration.id);
+
   if (existingOrder) {
     order = existingOrder;
   } else {
     order = await db.order.create({
       data: {
-        amout: price / 100,
+        amount: price / 100,
         userId: user.id,
         configurationId: configuration.id,
       },
@@ -53,7 +57,7 @@ export const createCheckoutSession = async ({
   }
 
   const product = await stripe.products.create({
-    name: "Custom iphone Case",
+    name: "Custom iPhone Case",
     images: [configuration.imageUrl],
     default_price_data: {
       currency: "USD",
@@ -66,7 +70,7 @@ export const createCheckoutSession = async ({
     cancel_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/configure/preview?id=${configuration.id}`,
     payment_method_types: ["card", "paypal"],
     mode: "payment",
-    // shipping_address_collection: {allowed_countries: ["DE", "US"]},
+    shipping_address_collection: { allowed_countries: ["DE", "US"] },
     metadata: {
       userId: user.id,
       orderId: order.id,
